@@ -1,6 +1,7 @@
 from alex_func import *
 from train_model import *
 from test_train_data import *
+from utils import submit_results
 
 if __name__ == '__main__':
     # -- Get data
@@ -17,12 +18,13 @@ if __name__ == '__main__':
         groupby_fun=["mean", "median"]
     )
     # -- train model
-    model = train_model(dt_train_original=train_df, model_name='random_forest')
+    model = train_model(dt_train_original=train_df, model_name='XGBoost')
 
     predictions = list(model.predict(test_df))
     submission = test_df[['id']]
     submission['site_eui'] = predictions
-    submission.to_csv('first_submission.csv', index=False)
+    # Submit results automatically to kaggle
+    submit_results(submission)
 
 
 

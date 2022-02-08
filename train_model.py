@@ -88,9 +88,9 @@ def train_model(dt_train_original: pd.DataFrame, model_name: str):
         }
     elif model_name == 'XGBoost':
         reg = create_pipeline_XGBoost()
-        param_grid = {'max_depth': [3, 6, 10],
-                  'learning_rate': [0.01, 0.05, 0.1],
-                  'n_estimators': [50, 100]}
+        param_grid = {'regressor__max_depth': [3, 6, 10],
+                  'regressor__learning_rate': [0.01, 0.05, 0.1],
+                  'regressor__n_estimators': [50, 100]}
     else:
         raise NotImplementedError(f'{model_name} has not been implemented')
     grid_search = GridSearchCV(reg, param_grid, cv=10, scoring='neg_root_mean_squared_error')
