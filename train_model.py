@@ -41,7 +41,8 @@ def create_preprocessing_numeric_pipeline(model_name: str):
         )
     else:
         raise NotImplementedError(f'{model_name} has not been implemented')
-    return  numeric_transformer
+    return numeric_transformer
+
 
 def create_preprocessing_pipeline(model_name: str):
     numeric_transformer = create_preprocessing_numeric_pipeline(model_name=model_name)
@@ -71,7 +72,7 @@ def create_pipeline_XGBoost():
     return reg
 
 
-def train_model(dt_train_original: pd.DataFrame, model_name:str):
+def train_model(dt_train_original: pd.DataFrame, model_name: str):
     df = dt_train_original.copy()
     local_logger.info('Train: Preparing data')
     y = df[target_var]
