@@ -17,4 +17,4 @@ if __name__ == '__main__':
         groupby_fun=["mean", "median"]
     )
     # -- train model
-    train_model(dt_train_original=train_df)
+    train_model(dt_train_original=train_df, model_name='random_forest')
