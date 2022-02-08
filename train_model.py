@@ -36,7 +36,8 @@ def create_preprocessing_numeric_pipeline(model_name: str):
         )
     else:
         raise NotImplementedError(f'{model_name} has not been implemented')
-    return  numeric_transformer
+    return numeric_transformer
+
 
 def create_preprocessing_pipeline(model_name: str):
     numeric_transformer = create_preprocessing_numeric_pipeline(model_name=model_name)
