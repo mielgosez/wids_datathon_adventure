@@ -17,4 +17,13 @@ if __name__ == '__main__':
         groupby_fun=["mean", "median"]
     )
     # -- train model
-    train_model(dt_train_original=train_df)
+    model = train_model(dt_train_original=train_df, model_name='random_forest')
+
+    predictions = list(model.predict(test_df))
+    submission = test_df[['id']]
+    submission['site_eui'] = predictions
+    submission.to_csv('first_submission.csv', index=False)
+
+
+
+
