@@ -31,7 +31,7 @@ def group_categ_var(
         dt_test_original:pd.DataFrame,
         categ_var:list,
         groupby_var:list,
-        tgt_var:list,
+        tgt_var:str,
         groupby_fun:list
 ):
     # -- Make copies
