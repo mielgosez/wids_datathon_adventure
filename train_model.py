@@ -8,7 +8,6 @@ from sklearn.pipeline import Pipeline
 from sklearn.impute import SimpleImputer
 from sklearn.compose import ColumnTransformer
 from sklearn.preprocessing import OneHotEncoder
-from sklearn.decomposition import PCA
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.model_selection import train_test_split, GridSearchCV
 from xgboost import XGBRegressor
@@ -60,7 +59,7 @@ def create_preprocessing_pipeline(model_name: str):
 def create_pipeline_random_forest():
     preprocessor_pipeline = create_preprocessing_pipeline(model_name='random_forest')
     reg = Pipeline(
-        steps=[("preprocessor", preprocessor_pipeline), ("pca", PCA(.95)), ("regressor", RandomForestRegressor())]
+        steps=[("preprocessor", preprocessor_pipeline), ("regressor", RandomForestRegressor())]
     )
     return reg
 
@@ -73,7 +72,7 @@ def create_pipeline_XGBoost():
     return reg
 
 
-def train_model(dt_train_original: pd.DataFrame, model_name: str = "random_forest"):
+def train_model(dt_train_original: pd.DataFrame, model_name: str):
     df = dt_train_original.copy()
     local_logger.info('Train: Preparing data')
     y = df[target_var]
@@ -85,13 +84,13 @@ def train_model(dt_train_original: pd.DataFrame, model_name: str = "random_fores
     if model_name == 'random_forest':
         reg = create_pipeline_random_forest()
         param_grid = {
-            "regressor__n_estimators": [100, 150, 200, 250, 300],
+            "regressor__n_estimators": [10, 50, 100],
         }
     elif model_name == 'XGBoost':
         reg = create_pipeline_XGBoost()
-        param_grid = {'max_depth': [3, 6, 10],
-                  'learning_rate': [0.01, 0.05, 0.1],
-                  'n_estimators': [50, 100, 150, 200, 250, 300]}
+        param_grid = {'regressor__max_depth': [3, 6, 10],
+                  'regressor__learning_rate': [0.01, 0.05, 0.1],
+                  'regressor__n_estimators': [50, 100, 150, 200, 250, 300]}
     else:
         raise NotImplementedError(f'{model_name} has not been implemented')
     grid_search = GridSearchCV(reg, param_grid, cv=10, scoring='neg_root_mean_squared_error')
