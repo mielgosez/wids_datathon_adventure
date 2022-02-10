@@ -80,7 +80,7 @@ def train_model(dt_train_original: pd.DataFrame, model_name: str):
     df.drop(['facility_type','id'], axis=1, inplace=True)
     X = df
     local_logger.info('Creating pipeline')
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=0)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.1, random_state=0)
     if model_name == 'random_forest':
         reg = create_pipeline_random_forest()
         param_grid = {
